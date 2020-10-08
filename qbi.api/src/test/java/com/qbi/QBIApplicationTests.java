@@ -1,10 +1,10 @@
-package com.template.microservicetemplate;
+package com.qbi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MicroserviceTemplateApplicationTests {
+class QBIApplicationTests {
 
 	@Test
 	void contextLoads() {
