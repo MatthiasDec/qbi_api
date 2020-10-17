@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.qbi.controller.AuthUserDetailsController;
+import com.qbi.service.AuthUserDetailsController;
 import com.qbi.util.TokenUtil;
 
 @Component

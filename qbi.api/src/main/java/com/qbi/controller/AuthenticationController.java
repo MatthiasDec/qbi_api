@@ -1,5 +1,8 @@
 package com.qbi.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.qbi.model.AuthenticationRequest;
 import com.qbi.model.AuthenticationResponse;
+import com.qbi.service.AuthUserDetailsController;
 import com.qbi.util.TokenUtil;
 
 @RestController
@@ -27,7 +31,7 @@ public class AuthenticationController {
 	private TokenUtil tokenUtil;
 	
 	@PostMapping("/Authenticate")
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response)
 			throws Exception{
 		try {
 			authenticationManager.authenticate(
@@ -41,6 +45,8 @@ public class AuthenticationController {
 		
 		final UserDetails userDetails = authUserDetailsController.loadUserByUsername(authenticationRequest.getUsername());
 		final String token = tokenUtil.generateToken(userDetails);
+		
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		
 		return ResponseEntity.ok(new AuthenticationResponse(token));
 	}

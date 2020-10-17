@@ -12,8 +12,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.qbi.authentication.CrossOriginsFilter;
 import com.qbi.authentication.TokenRequestFilter;
 
 @EnableWebSecurity
@@ -32,15 +34,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override 
 	protected void configure(HttpSecurity http) throws Exception{
+		http.addFilterBefore(new CrossOriginsFilter(), ChannelProcessingFilter.class);
+		
 		http.authorizeRequests()
-			.antMatchers("/test").authenticated()
-			.antMatchers("/Customer/**").hasAnyRole("USER")
-			.antMatchers("/").hasAnyRole("USER")
-			.antMatchers("/h2-console/**").permitAll()
 			.antMatchers("/Authenticate").permitAll()
 			.antMatchers("/api-doc").permitAll()
-			.antMatchers("/v3/**").permitAll()
-			.and().formLogin()
+			.anyRequest().authenticated()
 		   	.and().httpBasic();
 		
 		http.headers().frameOptions().disable();

@@ -24,12 +24,5 @@ public class UserDAO {
                 rs.getString("role")));
 		
 		return foundUser;
-	}
-	
-	public int count() {
-		String query = "SELECT COUNT(*) FROM company";
-		int count = jdbcTemplate.queryForObject(query, Integer.class);
-		return count;
-	}
-	
+	}	
 }

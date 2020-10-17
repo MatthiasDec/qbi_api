@@ -22,21 +22,6 @@ public class QBIApplication {
 		SpringApplication.run(QBIApplication.class, args);
 	}
 	
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/*")
-				.allowedOrigins("http://localhost:4200");
-				registry.addMapping("/Customer/*")
-				.allowedOrigins("http://localhost:4200");
-				registry.addMapping("/Customer/*/message")
-				.allowedOrigins("http://localhost:4200");
-			}
-		};
-	}
-	
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource)
     {
