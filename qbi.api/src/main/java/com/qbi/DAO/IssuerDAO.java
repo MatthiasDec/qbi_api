@@ -1,6 +1,5 @@
 package com.qbi.DAO;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +45,10 @@ public class IssuerDAO {
 		return issuer;
 	}
 	
-	public List<Map<String, Object>> getIssuerByProductId(int productId){
-		// TODO
-		String query = "SELECT * FROM issuer INNER JOIN product on  ";
-		
-		List<Map<String, Object>> result = jdbcTemplate.queryForList(query);
+	public Map<String, Object> getIssuerByProductId(int productId){
+		String query = "SELECT issuer.id, issuer.name, issuer.logo, issuer.\"Moody_rating\", issuer.\"S_and_P_rating\", issuer.\"Fitch_rating\" FROM issuer INNER JOIN product on product.id =  " 
+				+ productId + " and product.issuer_id = issuer.id";
+		Map<String, Object> result = jdbcTemplate.queryForMap(query);
 		return result;
 	}
 
@@ -63,10 +61,8 @@ public class IssuerDAO {
 	}
 
 	public Map<String, Object> deleteIssuer(int issuerId){
-		// TODO
 		String query = "DELETE FROM issuer WHERE id = '" + issuerId + "'";
-		
-		Map<String, Object> issuer = jdbcTemplate.queryForMap(query, new Object[] {issuerId});
+		Map<String, Object> issuer = jdbcTemplate.queryForMap(query);
 		return issuer;
 	}
 	
