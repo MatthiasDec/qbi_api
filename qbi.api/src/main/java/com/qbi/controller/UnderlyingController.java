@@ -1,6 +1,7 @@
 package com.qbi.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,46 +16,47 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.qbi.DAO.IssuerDAO;
+import com.qbi.DAO.UnderlyingDAO;
 import com.qbi.DAO.UtilsDAO;
 
 @RestController
-public class IssuerController {
+public class UnderlyingController {
 
 	@Autowired
-	private IssuerDAO issuerDAO;
+	private UnderlyingDAO underlyingDAO;
 
 	@Autowired
 	private UtilsDAO utilsDAO;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@PostMapping("/issuer/create")
-	public ResponseEntity<?> createIssuer(@RequestBody(required = false) Map<String, Object> requestBody) {
-		int createdIssuerId = issuerDAO.createIssuer(requestBody);
-		Map<String, Object> issuer = issuerDAO.getIssuer(createdIssuerId); // TODO : it sends back 1 so useless
+	@PostMapping("/underlying/create")
+	public ResponseEntity<?> createUnderlying(@RequestBody(required = false) Map<String, Object> requestBody) {
 
-		return new ResponseEntity(issuer, HttpStatus.CREATED);
+		int createdIssuerId = underlyingDAO.createUnderlying(requestBody); // TODO send back 1 = réussie
+		Map<String, Object> createdUnderlying = underlyingDAO.getUnderlying(createdIssuerId);
+
+		return new ResponseEntity(createdUnderlying, HttpStatus.CREATED);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/issuer/{issuerId}")
-	public ResponseEntity<?> getIssuer(@PathVariable("issuerId") int issuerId){
+	@GetMapping("/underlying/{underlyingId}")
+	public ResponseEntity<?> getIssuer(@PathVariable("underlyingId") int underlyingId){
 		
-		if(!utilsDAO.isEntryExistring(issuerId, "issuer")) {
+		if(!utilsDAO.isEntryExistring(underlyingId, "underlying")) {
 			Map<String, String> error = new HashMap<String, String>();
 			error.put("status", "404");
 			error.put("title", "Not Found");
-			error.put("details", "The issuer " + issuerId + " can't be found");
+			error.put("details", "The underlying " + underlyingId + " can't be found");
 			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
 		}
 		
-		Map<String, Object> issuer = issuerDAO.getIssuer(issuerId);
-		return new ResponseEntity(issuer, HttpStatus.OK);	
+		Map<String, Object> underlying = underlyingDAO.getUnderlying(underlyingId);
+		return new ResponseEntity(underlying, HttpStatus.OK);	
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/issuer/product/{productId}")
-	public ResponseEntity<?> getProductIssuer(HttpServletRequest request, @PathVariable("productId") int productId){
+	@GetMapping("/underlying/product/{productId}")
+	public ResponseEntity<?> getProductUnderlying(HttpServletRequest request, @PathVariable("productId") int productId){
 		
 		if(!utilsDAO.isEntryExistring(productId, "product")) {
 			Map<String, String> error = new HashMap<String, String>();
@@ -64,23 +66,22 @@ public class IssuerController {
 			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
 		}
 		
-		Map<String, Object> issuer = issuerDAO.getIssuerByProductId(productId);
-		
-		return new ResponseEntity(issuer, HttpStatus.OK);
+		List<Map<String, Object>> issuerList = underlyingDAO.getUnderlyingsByProductId(productId);
+		return new ResponseEntity(issuerList, HttpStatus.OK);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@DeleteMapping("/issuer/{issuerId}")
-	public ResponseEntity<?> deleteIssuer(@PathVariable("issuerId") int issuerId){
-		if(!utilsDAO.isEntryExistring(issuerId, "issuer")) {
+	@DeleteMapping("/underlying/{underlyingId}")
+	public ResponseEntity<?> deleteUnderlying(@PathVariable("underlyingId") int underlyingId){
+		if(!utilsDAO.isEntryExistring(underlyingId, "underlying")) {
 			Map<String, String> error = new HashMap<String, String>();
 			error.put("status", "404");
 			error.put("title", "Not Found");
-			error.put("details", "The issuer " + issuerId + " can't be found");
+			error.put("details", "The underlying " + underlyingId + " can't be found");
 			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
 		}
-		Map<String, Object> issuer = issuerDAO.deleteIssuer(issuerId);
-		return new ResponseEntity(issuer, HttpStatus.OK);
+		Map<String, Object> underlying = underlyingDAO.deleteUnderlying(underlyingId);
+		return new ResponseEntity(underlying, HttpStatus.OK);
 	}
 
 }

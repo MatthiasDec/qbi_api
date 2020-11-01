@@ -35,8 +35,8 @@ public class IssuerDAO {
 				+ issuer.get("name") + "', " + issuer.get("logo") + ", '" + issuer.get("Moody_rating")
 				+ "', '" + issuer.get("S_and_P_rating") + "', '" + issuer.get("Fitch_rating")  + "')";
 		
-		int issuerMap = jdbcTemplate.update(query);
-		return issuerMap;
+		int affected_rows = jdbcTemplate.update(query);
+		return affected_rows;
 	}
 	
 	public Map<String, Object> getIssuer(int issuerId){
@@ -61,7 +61,7 @@ public class IssuerDAO {
 	}
 
 	public Map<String, Object> deleteIssuer(int issuerId){
-		String query = "DELETE FROM issuer WHERE id = '" + issuerId + "'";
+		String query = "DELETE FROM issuer WHERE id = " + issuerId;
 		Map<String, Object> issuer = jdbcTemplate.queryForMap(query);
 		return issuer;
 	}
