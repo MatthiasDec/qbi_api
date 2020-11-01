@@ -55,9 +55,9 @@ public class UnderlyingDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public int createUnderlying(Map<String, Object> Underlying) {
+	public int createUnderlying(Map<String, Object> underlying) {
 		String query = "INSERT INTO underlying(id, name, ticker) VALUES(DEFAULT, '"
-				+ Underlying.get("name") + "', '" + Underlying.get("ticker") + "')";
+				+ underlying.get("name") + "', '" + underlying.get("ticker") + "')";
 		
 		int UnderlyingMap = jdbcTemplate.update(query);
 		return UnderlyingMap;
