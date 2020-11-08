@@ -20,11 +20,6 @@ public class ProductDAO {
 		return product;
 	}
 	
-	public Map<String, Object> createProduct(Map<String, Object> product){
-		//TODO
-		return null;
-	}
-	
 	public List<Map<String, Object>> getProductsByUserId(int userId){
 		String query = "SELECT * FROM product JOIN TABLE  ";
 		
