@@ -46,6 +46,23 @@ ALTER TABLE public.link_product_underlying
     OWNER to postgres;
 
 
+
+New 06/11/2020
+ALTER TABLE public.underlying
+	ADD COLUMN current_value real NOT NULL,;
+
+UPDATE public.underlying SET
+current_value = '10549.31'::real WHERE
+id = 1;
+UPDATE public.underlying SET
+current_value = '4990.50'::real WHERE
+id = 2;
+UPDATE public.underlying SET
+current_value = '2290.48'::real WHERE
+id = 3;
+
+ALTER TABLE public.link_product_underlying
+    RENAME fixing_level TO fixing_value;
 */
 
 
@@ -56,8 +73,8 @@ public class UnderlyingDAO {
 	private JdbcTemplate jdbcTemplate;
 
 	public int createUnderlying(Map<String, Object> underlying) {
-		String query = "INSERT INTO underlying(id, name, ticker) VALUES(DEFAULT, '"
-				+ underlying.get("name") + "', '" + underlying.get("ticker") + "')";
+		String query = "INSERT INTO underlying(id, name, ticker, current_value) VALUES(DEFAULT, '"
+				+ underlying.get("name") + "', '" + underlying.get("ticker") + "', " + underlying.get("current_value") + ")";
 		
 		int UnderlyingMap = jdbcTemplate.update(query);
 		return UnderlyingMap;
@@ -70,11 +87,19 @@ public class UnderlyingDAO {
 	}
 	
 	public List<Map<String, Object>> getUnderlyingsByProductId(int productId){
-		String query = "SELECT underlying.id, underlying.name, underlying.ticker, link_product_underlying.fixing_level FROM underlying " +
+		String query = "SELECT underlying.id, underlying.name, underlying.ticker, link_product_underlying.fixing_value as \"fixingValue\", underlying.current_value as \"currentValue\" FROM underlying " +
 				"INNER JOIN link_product_underlying on link_product_underlying.product_id =  " 
 				+ productId + " and link_product_underlying.Underlying_id = Underlying.id";
 		List<Map<String, Object>> result = jdbcTemplate.queryForList(query);
 		return result;
+	}
+
+	public int createlinkUnderlyingProduct(Map<String, Object> couple) {
+		String query = "INSERT INTO link_product_underlying(product_id, underlying_id, fixing_value) VALUES('"
+				+ couple.get("product_id") + "', '" + couple.get("underlying_id") + "', " + couple.get("fixing_value") + ")";
+		
+		int UnderlyingMap = jdbcTemplate.update(query);
+		return UnderlyingMap;
 	}
 
 	public Map<String, Object> patchUnderlying(int UnderlyingId){

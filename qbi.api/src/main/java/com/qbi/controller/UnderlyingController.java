@@ -39,6 +39,16 @@ public class UnderlyingController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PostMapping("/underlying/product/create")
+	public ResponseEntity<?> createlinkUnderlyingProduct(@RequestBody(required = false) Map<String, Object> requestBody) {
+
+		int createdIssuerId = underlyingDAO.createlinkUnderlyingProduct(requestBody); // TODO send back 1 = réussie
+		Map<String, Object> createdUnderlying = underlyingDAO.getUnderlying(createdIssuerId);
+
+		return new ResponseEntity(createdUnderlying, HttpStatus.CREATED);
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("/underlying/{underlyingId}")
 	public ResponseEntity<?> getIssuer(@PathVariable("underlyingId") int underlyingId){
 		
