@@ -7,6 +7,59 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+
+/**
+-- Table: public.product
+
+-- DROP TABLE public.product;
+
+CREATE TABLE public.product
+(
+    isin text COLLATE pg_catalog."default" NOT NULL,
+    name text COLLATE pg_catalog."default" NOT NULL,
+    maturity_date integer NOT NULL,
+    final_valuation_date integer NOT NULL,
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    initial_valuation_date integer NOT NULL,
+    issue_date integer NOT NULL,
+    issuer_id integer NOT NULL,
+    autocall_level integer NOT NULL,
+    coupon_level integer NOT NULL,
+    barrier_level integer NOT NULL,
+    currency text COLLATE pg_catalog."default" NOT NULL,
+    potential_coupon text COLLATE pg_catalog."default" NOT NULL,
+    frequency text COLLATE pg_catalog."default" NOT NULL,
+    memory_effect boolean NOT NULL,
+    created_on integer NOT NULL,
+    CONSTRAINT product_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.product
+    OWNER to postgres;
+    
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product 1', 0, 0, 1, 0, 0, 0, 0, 0, 0, 'EUR', '', '', true, 0);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product 2', 0, 0, 2, 0, 0, 0, 0, 0, 0, 'EUR', '', '', true, 0);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product 3', 0, 0, 3, 0, 0, 0, 0, 0, 0, 'EUR', '', '', true, 0);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product 4', 0, 0, 4, 0, 0, 0, 0, 0, 0, 'EUR', '', '', true, 0);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product 5', 0, 0, 5, 0, 0, 0, 0, 0, 0, 'EUR', '', '', true, 0);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product 6', 0, 0, 6, 0, 0, 0, 0, 0, 0, 'EUR', '', '', true, 0);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product 7', 0, 0, 7, 0, 0, 0, 0, 0, 0, 'EUR', '', '', true, 0);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product nouveau', 0, 0, 8, 0, 0, 0, 0, 0, 0, '', '', '', false, 0);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product nouveau', 0, 0, 9, 0, 0, 0, 0, 0, 0, '', '', '', false, 1604867542);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product nouveau 2', 0, 0, 10, 0, 0, 0, 0, 0, 0, '', '', '', false, 1604867562);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product nouveau 2', 0, 0, 11, 0, 0, 0, 0, 0, 0, '', '', '', false, 1604867874);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product nouveau 2', 0, 0, 12, 0, 0, 0, 0, 0, 0, '', '', '', false, 1604867934);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product nouveau 2', 0, 0, 13, 0, 0, 0, 0, 0, 0, '', '', '', false, 1604867997);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product nouveau 2', 0, 0, 14, 0, 0, 0, 0, 0, 0, '', '', '', false, 1604868001);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product nouveau 2', 0, 0, 15, 0, 0, 0, 0, 0, 0, '', '', '', false, 1604868024);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'product nouveau 2', 0, 0, 17, 0, 0, 0, 0, 0, 0, '', '', '', false, 1604868052);
+INSERT INTO public.product OVERRIDING SYSTEM VALUE VALUES ('', 'it works !', 0, 0, 16, 0, 0, 15, 0, 0, 14, 'LIVRE STERLING', '', '', false, 1604868025);
+
+
+ */
+
 @Repository
 public class ProductDAO {
 
