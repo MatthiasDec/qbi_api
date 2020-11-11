@@ -46,7 +46,7 @@ public class IssuerDAO {
 	}
 	
 	public Map<String, Object> getIssuerByProductId(int productId){
-		String query = "SELECT issuer.id, issuer.name, issuer.logo, issuer.\"Moody_rating\", issuer.\"S_and_P_rating\", issuer.\"Fitch_rating\" FROM issuer INNER JOIN product on product.id =  " 
+		String query = "SELECT issuer.id, issuer.name, issuer.logo, issuer.\"Moody_rating\" as \"MoodyRating\", issuer.\"S_and_P_rating\" as \"SandPRating\", issuer.\"Fitch_rating\" as \"FitchRating\" FROM issuer INNER JOIN product on product.id =  " 
 				+ productId + " and product.issuer_id = issuer.id";
 		Map<String, Object> result = jdbcTemplate.queryForMap(query);
 		return result;
