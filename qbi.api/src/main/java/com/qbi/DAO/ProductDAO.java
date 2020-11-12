@@ -86,6 +86,11 @@ public class ProductDAO {
 		jdbcTemplate.update(query, new Object[] {productId, userId});
 	}
 	
+	public boolean unlinkProductAndUser(int userId, int productId) {
+		String query = "DELETE FROM  link_user_product WHERE user_id = ? AND product_id = ?";
+		return jdbcTemplate.update(query, new Object[] {userId, productId}) == 1;
+	}
+	
 	public boolean checkIfRelationExists(int userId, int productId) {
 		String query = "SELECT COUNT(*) FROM link_user_product WHERE product_id = ? AND user_id = ?";
 		

@@ -101,7 +101,7 @@ public class ProductController {
 		boolean deleted = utilsDAO.deleteEntry("product", productId);
 		
 		if(deleted) {
-			return new ResponseEntity(HttpStatus.OK, null);
+			return new ResponseEntity(null, HttpStatus.OK);
 		}
 		else {
 			Map<String, String> error = new HashMap<String, String>();

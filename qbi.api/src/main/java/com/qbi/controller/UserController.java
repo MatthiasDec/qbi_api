@@ -72,8 +72,26 @@ public class UserController {
 			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
 		}
 		
+		if(!productDAO.checkIfRelationExists(userId, productId)) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The link between the user " + userId + " and the product " + productId + " does not exists");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
 		
-		return null;
+		boolean deleted = productDAO.unlinkProductAndUser(userId, productId);
+		
+		if(deleted) {
+			return new ResponseEntity(null, HttpStatus.OK);
+		}
+		else {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "500");
+			error.put("title", "Internal Error");
+			error.put("details", "Internal Error");
+			return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 }
