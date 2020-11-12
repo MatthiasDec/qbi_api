@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,7 @@ public class UserController {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping("/users/{userId}/relationship/{productId}")
-	public ResponseEntity<?> linkProductToUser(@PathVariable("userId") int userId, @PathVariable("productId") int productId){
+	public ResponseEntity<?> linkUserToProduct(@PathVariable("userId") int userId, @PathVariable("productId") int productId){
 		
 		if(!utilsDAO.isEntryExistring(userId, "app_user")) {
 			Map<String, String> error = new HashMap<String, String>();
@@ -57,6 +58,22 @@ public class UserController {
 		productDAO.linkProductAndUser(userId, productId);
 		
 		return new ResponseEntity(null, HttpStatus.CREATED);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@DeleteMapping("/users/{userId}/relationship/{productId}")
+	public ResponseEntity<?> unlinkUserToProduct(@PathVariable("userId") int userId, @PathVariable("productId") int productId){
+		
+		if(!utilsDAO.isEntryExistring(userId, "app_user")) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The user " + userId + " can't be found");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
+		
+		
+		return null;
 	}
 	
 }

@@ -74,9 +74,9 @@ public class ProductDAO {
 	}
 	
 	public List<Map<String, Object>> getProductsByUserId(int userId){
-		String query = "SELECT * FROM product JOIN TABLE  ";
+		String query = "SELECT * FROM product JOIN link_user_product as link ON product.id = link.product_id WHERE link.user_id = ?";
 		
-		List<Map<String, Object>> result = jdbcTemplate.queryForList(query);
+		List<Map<String, Object>> result = jdbcTemplate.queryForList(query, new Object[] {userId});
 		return result;
 	}
 	
