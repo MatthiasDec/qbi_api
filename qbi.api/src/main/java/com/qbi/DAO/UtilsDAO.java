@@ -125,6 +125,9 @@ public class UtilsDAO {
 				case("int4"):
 					queryValues.append("0, ");
 					break;
+				case("float4"):
+					queryValues.append("0, ");
+					break;
 				case("numeric"):
 					queryValues.append("0, ");
 					break;
