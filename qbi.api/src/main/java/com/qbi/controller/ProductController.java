@@ -39,23 +39,6 @@ public class ProductController {
 	ProductDAO productDAO;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/products/{productId}")
-	public ResponseEntity<?> getProduct(@PathVariable("productId") int productId){
-		
-		if(!utilsDAO.isEntryExistring(productId, "product")) {
-			Map<String, String> error = new HashMap<String, String>();
-			error.put("status", "404");
-			error.put("title", "Not Found");
-			error.put("details", "The product " + productId + " can't be found");
-			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
-		}
-		
-		Map<String, Object> product = productDAO.getProduct(productId);
-		return new ResponseEntity(product, HttpStatus.OK);
-		
-	}
-	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping("/products")
 	public ResponseEntity<?> createProduct(@RequestBody(required=false) Map<String, Object> requestBody){
 		
@@ -65,25 +48,6 @@ public class ProductController {
 		Map<String, Object> constructedProduct = productDAO.getProduct(createdProductId);
 			
 		return new ResponseEntity(constructedProduct, HttpStatus.CREATED);
-	}
-	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@PatchMapping("/products/{productId}")
-	public ResponseEntity<?> updateProduct(@PathVariable("productId") int productId, @RequestBody(required = false) Map<String, Object> requestBody){
-		if(!utilsDAO.isEntryExistring(productId, "product")) {
-			Map<String, String> error = new HashMap<String, String>();
-			error.put("status", "404");
-			error.put("title", "Not Found");
-			error.put("details", "The product " + productId + " can't be found");
-			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
-		}
-		if(requestBody != null) {
-			utilsDAO.updateEntry("product", requestBody, productId);
-		}
-		
-		Map<String, Object> product = utilsDAO.getEntry("product", productId);
-		
-		return new ResponseEntity(product, HttpStatus.OK);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -113,23 +77,6 @@ public class ProductController {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/products/user/{userId}")
-	public ResponseEntity<?> getUserProducts(HttpServletRequest request, @PathVariable("userId") int userId){
-		// ENDPOINT FOR ADMIN / SALES
-		if(!utilsDAO.isEntryExistring(userId, "app_user")) {
-			Map<String, String> error = new HashMap<String, String>();
-			error.put("status", "404");
-			error.put("title", "Not Found");
-			error.put("details", "The user " + userId + " can't be found");
-			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
-		}
-		
-		List<Map<String, Object>> listProducts = productDAO.getProductsByUserId(userId);
-		
-		return new ResponseEntity(listProducts, HttpStatus.OK);
-	}
-	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("/products/user")
 	public ResponseEntity<?> getListProducts(HttpServletRequest request){
 		String authToken = request.getHeader("Authorization").substring(6, request.getHeader("Authorization").length());
@@ -151,5 +98,58 @@ public class ProductController {
 		
 		return new ResponseEntity(listProducts, HttpStatus.OK);
 		
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/products/{productId}")
+	public ResponseEntity<?> getProduct(@PathVariable("productId") int productId){
+		
+		if(!utilsDAO.isEntryExistring(productId, "product")) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The product " + productId + " can't be found");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
+		
+		Map<String, Object> product = productDAO.getProduct(productId);
+		return new ResponseEntity(product, HttpStatus.OK);
+		
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/products/user/{userId}")
+	public ResponseEntity<?> getUserProducts(HttpServletRequest request, @PathVariable("userId") int userId){
+		// ENDPOINT FOR ADMIN / SALES
+		if(!utilsDAO.isEntryExistring(userId, "app_user")) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The user " + userId + " can't be found");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
+		
+		List<Map<String, Object>> listProducts = productDAO.getProductsByUserId(userId);
+		
+		return new ResponseEntity(listProducts, HttpStatus.OK);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PatchMapping("/products/{productId}")
+	public ResponseEntity<?> updateProduct(@PathVariable("productId") int productId, @RequestBody(required = false) Map<String, Object> requestBody){
+		if(!utilsDAO.isEntryExistring(productId, "product")) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The product " + productId + " can't be found");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
+		if(requestBody != null) {
+			utilsDAO.updateEntry("product", requestBody, productId);
+		}
+		
+		Map<String, Object> product = utilsDAO.getEntry("product", productId);
+		
+		return new ResponseEntity(product, HttpStatus.OK);
 	}
 }
