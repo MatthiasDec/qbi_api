@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9010a353-2993-45c5-8e97-04600cc358b1",
+		"_postman_id": "dab0ba7c-fd55-4efe-aca9-0126d9d2b5c6",
 		"name": "QBI_API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -97,8 +97,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Underlying",
@@ -218,8 +217,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Event",
@@ -227,6 +225,16 @@
 				{
 					"name": "Event Get",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -309,15 +317,54 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Next Event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/event/product/next/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"event",
+								"product",
+								"next",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Product",
 			"item": [
 				{
-					"name": "get product list for authenticated user",
+					"name": "Product Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/products/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products List of User",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -334,190 +381,46 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "get product list for input user",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/products/user/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"products",
-								"user",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create product",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"test product\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/products",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"products"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "modify product",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"it works !\",\r\n    \"currency\":\"DOLLAR\",\r\n    \"id\":23,\r\n    \"barrier_level\":14\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/products/16",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"products",
-								"16"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get input product",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/products/10",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"products",
-								"10"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete product",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/products/4",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"products",
-								"4"
-							]
-						}
-					},
-					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
-			"name": "User",
+			"name": "Underlying History",
 			"item": [
 				{
-					"name": "link user to product",
+					"name": "UnderlyingHistory Create",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/users/1/relationship/15",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"users",
-								"1",
-								"relationship",
-								"15"
-							]
+							"raw": ""
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "unlink user to product",
+					"name": "Get Underlying History Full",
 					"request": {
-						"method": "DELETE",
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/users/2/relationship/2",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"users",
-								"2",
-								"relationship",
-								"2"
-							]
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Underlying History Delete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
 						}
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Authenticate",
@@ -525,7 +428,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "2f8c5bfc-420c-4ba5-858d-43a56be27534",
 						"exec": [
 							"pm.test(\"Working Authentication\", function(){\r",
 							"    pm.response.to.have.status(200);\r",
@@ -541,6 +443,9 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -602,7 +507,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "87598d2e-5396-4bff-a50d-569bd3bbf74b",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -612,13 +516,11 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "238c7e8e-bfe0-4f71-8607-a574f37387e2",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
