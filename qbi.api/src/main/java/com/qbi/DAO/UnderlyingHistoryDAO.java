@@ -52,6 +52,12 @@ public class UnderlyingHistoryDAO {
 		String query = "SELECT * FROM underlying_history WHERE underlying_id = " + underlyingId + "ORDER BY date DESC";	
 		List<Map<String, Object>> underlyinghistoryfull = jdbcTemplate.queryForList(query);
 		return underlyinghistoryfull;
+    }
+    
+    public List<Map<String, Object>> getUnderlyingHistoryBetDate(int underlyingId, Date beg_date, Date end_date){
+		String query = "SELECT * FROM underlying_history WHERE underlying_id = " + underlyingId + "AND date >=" + beg_date + "AND date <=" + end_date + "ORDER BY date DESC";	
+		List<Map<String, Object>> underlyinghistoryfull = jdbcTemplate.queryForList(query);
+		return underlyinghistoryfull;
 	}
 
 	

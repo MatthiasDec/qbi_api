@@ -464,7 +464,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \"product_id\": 1,\r\n    \"bid\": 101,\r\n    \"ask\":98,\r\n    \"date\": \"24/12/2021\"\r\n}",
+							"raw": "{ \"product_id\": 1,\r\n    \"bid\": 101,\r\n    \"ask\":98,\r\n    \"date\": \"24/12/2022\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -517,6 +517,45 @@
 							"path": [
 								"underlyinghistory",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product History Between Dates",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/producthistorybetdate?productId=1&beg_date=01/01/2021&end_date=12/31/2021",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"producthistorybetdate"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "1"
+								},
+								{
+									"key": "beg_date",
+									"value": "01/01/2021"
+								},
+								{
+									"key": "end_date",
+									"value": "12/31/2021"
+								}
 							]
 						}
 					},

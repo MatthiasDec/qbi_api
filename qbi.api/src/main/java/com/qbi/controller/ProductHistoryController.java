@@ -75,6 +75,22 @@ public class ProductHistoryController {
 		return new ResponseEntity(producthistoryondate, HttpStatus.OK);	
 	}
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @GetMapping("/producthistorybetdate")
+    public ResponseEntity<?> getProductHistoryBetDate(@RequestParam(value="productId",required=true) int productId,
+    @RequestParam(value="beg_date",required=true) Date beg_date,@RequestParam(value="end_date",required=true) Date end_date){
+		
+		if(!utilsDAO.isEntryExistring(productId, "product")) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The product " + productId + " can't be found");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
+		
+		List<Map<String, Object>> producthistorybetdate = producthistoryDAO.getProductHistoryBetdate(productId,beg_date,end_date);
+		return new ResponseEntity(producthistorybetdate, HttpStatus.OK);	
+	}
 
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

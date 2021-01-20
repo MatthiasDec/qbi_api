@@ -75,7 +75,22 @@ public class UnderlyingHistoryController {
 		return new ResponseEntity(underlyinghistoryondate, HttpStatus.OK);	
 	}
 
-
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @GetMapping("/underlyinghistorybetdate")
+    public ResponseEntity<?> getUnderlyingHistoryBetDate(@RequestParam(value="underlyingId",required=true) int underlyingId,
+    @RequestParam(value="beg_date",required=true) Date beg_date,@RequestParam(value="end_date",required=true) Date end_date){
+		
+		if(!utilsDAO.isEntryExistring(underlyingId, "underlying")) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The underlying " + underlyingId + " can't be found");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
+		
+		List<Map<String, Object>> underlyinghistorybetdate = underlyinghistoryDAO.getUnderlyingHistoryBetDate(underlyingId,beg_date,end_date);
+		return new ResponseEntity(underlyinghistorybetdate, HttpStatus.OK);	
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@DeleteMapping("/underlyinghistory/{underlyinghistoryId}")

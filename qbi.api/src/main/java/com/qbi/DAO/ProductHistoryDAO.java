@@ -18,7 +18,7 @@ CREATE TABLE public.product_history
     bid real,
 	ask real
     PRIMARY KEY (id),
-    CONSTRAINT underlying_id FOREIGN KEY (product_id)
+    CONSTRAINT product_id FOREIGN KEY (product_id)
         REFERENCES public.product (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
@@ -49,6 +49,12 @@ public class ProductHistoryDAO {
     
     public List<Map<String, Object>> getProductHistoryFull(int productId){
 		String query = "SELECT * FROM product_history WHERE product_id = " + productId + "ORDER BY date DESC";	
+		List<Map<String, Object>> producthistoryfull = jdbcTemplate.queryForList(query);
+		return producthistoryfull;
+    }
+    
+    public List<Map<String, Object>> getProductHistoryBetdate(int productid, Date beg_date, Date end_date){
+		String query = "SELECT * FROM product_history WHERE product_id = " + productid + " AND date >= " + beg_date + " AND date <= " + end_date + " ORDER BY date DESC";	
 		List<Map<String, Object>> producthistoryfull = jdbcTemplate.queryForList(query);
 		return producthistoryfull;
 	}
