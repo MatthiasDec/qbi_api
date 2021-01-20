@@ -455,6 +455,76 @@
 			]
 		},
 		{
+			"name": "Product History",
+			"item": [
+				{
+					"name": "Product History Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"product_id\": 1,\r\n    \"bid\": 101,\r\n    \"ask\":98,\r\n    \"date\": \"24/12/2021\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/producthistory",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"producthistory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product History Full",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/producthistories/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"producthistories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product History Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/underlyinghistory/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"underlyinghistory",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Authenticate",
 			"event": [
 				{
