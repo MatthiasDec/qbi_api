@@ -1,60 +1,21 @@
 {
 	"info": {
-		"_postman_id": "dab0ba7c-fd55-4efe-aca9-0126d9d2b5c6",
+		"_postman_id": "496e4aa8-c329-4220-871f-fb90ec92029e",
 		"name": "QBI_API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Issuer",
+			"name": "Company",
 			"item": [
 				{
-					"name": "Issuer Get ",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/issuer/4",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"issuer",
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Issuer",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/issuer/7",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"issuer",
-								"7"
-							]
-						},
-						"description": "Renvoie une erreur mais fonctionne"
-					},
-					"response": []
-				},
-				{
-					"name": "Issuer create",
+					"name": "Create a company",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"aaaa\",\r\n    \"logo\": \"NULL\",\r\n    \"Moody_rating\": \"A2\",\r\n    \"S_and_P_rating\": \"A\",\r\n    \"Fitch_rating\": \"A+\"\r\n}",
+							"raw": "{\r\n    \"name\":\"21 Centrale Partners\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -62,126 +23,31 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/issuer/create",
+							"raw": "localhost:8080/companies",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"issuer",
-								"create"
-							]
-						},
-						"description": "Renvoie une erreur mais fonctionne"
-					},
-					"response": []
-				},
-				{
-					"name": "Product's Issuer",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/issuer/product/2",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"issuer",
-								"product",
-								"2"
-							]
-						},
-						"description": "Use product ID to find Issuer"
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Underlying",
-			"item": [
-				{
-					"name": "Underlying",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/underlying/3",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"underlying",
-								"3"
+								"companies"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Underlying create",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"EUROSTOXX 50\",\r\n    \"ticker\": \"SXY5E\",\r\n    \"current_value\": 3273\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/underlying/create",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"underlying",
-								"create"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "underlying Delete ",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/underlying/4",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"underlying",
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Product's Underlyings",
+					"name": "Get a company",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/underlying/product/1",
+							"raw": "localhost:8080/companies/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"underlying",
-								"product",
+								"companies",
 								"1"
 							]
 						}
@@ -189,13 +55,71 @@
 					"response": []
 				},
 				{
-					"name": "Link Underlying and Product",
+					"name": "Delete a Company",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/companies/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"companies",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get companies of the current user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/companies/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"companies",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get companies of a particular user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/companies/user/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"companies",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a company",
+					"request": {
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"product_id\": \"1\",\r\n    \"underlying_id\": \"4\",\r\n    \"fixing_value\": 3254\r\n}",
+							"raw": "{\r\n    \"name\":\"UDPATED NAME\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -203,15 +127,58 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/underlying/product/create",
+							"raw": "localhost:8080/companies/2",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"underlying",
-								"product",
-								"create"
+								"companies",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link a User to a Company",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/2/relationship/companies/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"2",
+								"relationship",
+								"companies",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unlink a User to a Company",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/2/relationship/companies/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"2",
+								"relationship",
+								"companies",
+								"5"
 							]
 						}
 					},
@@ -238,14 +205,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/event/1",
+							"raw": "localhost:8080/events/10",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"event",
-								"1"
+								"events",
+								"10"
 							]
 						}
 					},
@@ -266,14 +233,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/event/create",
+							"raw": "localhost:8080/events",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"event",
-								"create"
+								"events"
 							]
 						}
 					},
@@ -285,14 +251,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/event/2",
+							"raw": "localhost:8080/events/9",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"event",
-								"2"
+								"events",
+								"9"
 							]
 						}
 					},
@@ -304,15 +270,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/event/product/2",
+							"raw": "localhost:8080/products/2/events",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"event",
-								"product",
-								"2"
+								"products",
+								"2",
+								"events"
 							]
 						}
 					},
@@ -324,16 +290,183 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/event/product/next/1",
+							"raw": "localhost:8080/products/2/events/next",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"event",
-								"product",
-								"next",
-								"1"
+								"products",
+								"2",
+								"events",
+								"next"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": \"3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/events/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"events",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\": \"UPDATE PRODUCT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/products/14",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"14"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Issuer",
+			"item": [
+				{
+					"name": "Issuer Get ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/issuers/8",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"issuers",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Issuer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/issuers/8",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"issuers",
+								"8"
+							]
+						},
+						"description": "Renvoie une erreur mais fonctionne"
+					},
+					"response": []
+				},
+				{
+					"name": "Issuer create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"aaaa\",\r\n    \"logo\": \"NULL\",\r\n    \"moody_rating\": \"A2\",\r\n    \"s_and_p_rating\": \"A\",\r\n    \"fitch_rating\": \"A+\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/issuers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"issuers"
+							]
+						},
+						"description": "Renvoie une erreur mais fonctionne"
+					},
+					"response": []
+				},
+				{
+					"name": "Issuer update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"updated_product\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/issuers/9",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"issuers",
+								"9"
 							]
 						}
 					},
@@ -344,6 +477,33 @@
 		{
 			"name": "Product",
 			"item": [
+				{
+					"name": "Product Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/products",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Product Get",
 					"request": {
@@ -381,6 +541,419 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Product Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/products/18",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product's Issuer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/products/2/issuers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"2",
+								"issuers"
+							]
+						},
+						"description": "Use product ID to find Issuer"
+					},
+					"response": []
+				},
+				{
+					"name": "Product Get for given user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/products/user/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product link to user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/1/relationship/products/17",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"1",
+								"relationship",
+								"products",
+								"17"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product unlink to user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/1/relationship/products/17",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"1",
+								"relationship",
+								"products",
+								"17"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product History",
+			"item": [
+				{
+					"name": "Product History Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"product_id\": 1,\r\n    \"bid\": 101,\r\n    \"ask\":98,\r\n    \"date\": \"22/12/2022\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/products/history",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product History Full",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/products/1/history",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"1",
+								"history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product History Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/products/history/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"history",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product History Between Dates",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/products/1/history/between?beg_date=01/01/2021&end_date=12/31/2021",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"1",
+								"history",
+								"between"
+							],
+							"query": [
+								{
+									"key": "beg_date",
+									"value": "01/01/2021"
+								},
+								{
+									"key": "end_date",
+									"value": "12/31/2021"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product History on particular date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/products/1/history/date?valuedate=2022-12-24",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"1",
+								"history",
+								"date"
+							],
+							"query": [
+								{
+									"key": "valuedate",
+									"value": "2022-12-24"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Underlying",
+			"item": [
+				{
+					"name": "Underlying",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/underlyings/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"underlyings",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Underlying create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"EUROSTOXX 50\",\r\n    \"ticker\": \"SXY5E\",\r\n    \"current_value\": 3273\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/underlyings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"underlyings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "underlying Delete ",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/underlyings/9",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"underlyings",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product's Underlyings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/products/1/underlyings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"1",
+								"underlyings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Link Underlying and Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fixing_value\": 3254\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/products/1/relationship/underlyings/7",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"1",
+								"relationship",
+								"underlyings",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Underlying update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"NIKKEI UPDATED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/underlyings/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"underlyings",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unlink Underlying and Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/products/1/relationship/underlyings/7",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"1",
+								"relationship",
+								"underlyings",
+								"7"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -402,13 +975,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/underlyinghistory",
+							"raw": "localhost:8080/underlyings/history",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"underlyinghistory"
+								"underlyings",
+								"history"
 							]
 						}
 					},
@@ -420,14 +994,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/underlyinghistories/1",
+							"raw": "localhost:8080/underlyings/1/history",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"underlyinghistories",
-								"1"
+								"underlyings",
+								"1",
+								"history"
 							]
 						}
 					},
@@ -439,123 +1014,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/underlyinghistory/1",
+							"raw": "localhost:8080/underlyings/history/1",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"underlyinghistory",
+								"underlyings",
+								"history",
 								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Product History",
-			"item": [
-				{
-					"name": "Product History Create",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{ \"product_id\": 1,\r\n    \"bid\": 101,\r\n    \"ask\":98,\r\n    \"date\": \"24/12/2022\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/producthistory",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"producthistory"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Product History Full",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/producthistories/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"producthistories",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Product History Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:8080/underlyinghistory/1",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"underlyinghistory",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Product History Between Dates",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "localhost:8080/producthistorybetdate?productId=1&beg_date=01/01/2021&end_date=12/31/2021",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"producthistorybetdate"
-							],
-							"query": [
-								{
-									"key": "productId",
-									"value": "1"
-								},
-								{
-									"key": "beg_date",
-									"value": "01/01/2021"
-								},
-								{
-									"key": "end_date",
-									"value": "12/31/2021"
-								}
 							]
 						}
 					},
