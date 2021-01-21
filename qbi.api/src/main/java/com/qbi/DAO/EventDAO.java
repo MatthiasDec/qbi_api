@@ -52,12 +52,20 @@ public class EventDAO {
 		Map<String, Object> event = jdbcTemplate.queryForMap(query);
 		return event;
 	}
+
+	public Map<String, Object> getNextEvent(int productId){
+		String query = "SELECT * FROM event WHERE product_id =  " + productId + " ORDER BY date ASC LIMIT 1";	
+		Map<String, Object> event = jdbcTemplate.queryForMap(query);
+		return event;
+	}
 	
 	public List<Map<String, Object>> getEventsByProductId(int productId){
 		String query = "SELECT * FROM event WHERE product_id =  " + productId + "";
 		List<Map<String, Object>> result = jdbcTemplate.queryForList(query);
 		return result;
 	}
+
+	
 
 	public Map<String, Object> patchEvent(int eventId){
 		// TODO

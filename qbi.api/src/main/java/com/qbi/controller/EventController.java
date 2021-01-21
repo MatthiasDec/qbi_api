@@ -71,6 +71,23 @@ public class EventController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/event/product/next/{productId}")
+	public ResponseEntity<?> getProductNextEvent(HttpServletRequest request, @PathVariable("productId") int productId){
+		
+		if(!utilsDAO.isEntryExistring(productId, "product")) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The product " + productId + " can't be found");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
+		
+		Map<String, Object> event = eventDAO.getNextEvent(productId);
+		
+		return new ResponseEntity(event, HttpStatus.OK);
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@DeleteMapping("/event/{eventId}")
 	public ResponseEntity<?> deleteEvent(@PathVariable("eventId") int eventId){
 		if(!utilsDAO.isEntryExistring(eventId, "event")) {
