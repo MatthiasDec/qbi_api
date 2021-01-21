@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,16 +29,18 @@ public class IssuerController {
 	private UtilsDAO utilsDAO;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@PostMapping("/issuer/create")
+	@PostMapping("/issuers")
 	public ResponseEntity<?> createIssuer(@RequestBody(required = false) Map<String, Object> requestBody) {
-		int createdIssuerId = issuerDAO.createIssuer(requestBody);
-		Map<String, Object> issuer = issuerDAO.getIssuer(createdIssuerId); // TODO : it sends back 1 so useless
+		
+		int createdIssuerId = utilsDAO.createEntry("issuer", requestBody);
+		
+		Map<String, Object> issuer = issuerDAO.getIssuer(createdIssuerId);
 
 		return new ResponseEntity(issuer, HttpStatus.CREATED);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/issuer/{issuerId}")
+	@GetMapping("/issuers/{issuerId}")
 	public ResponseEntity<?> getIssuer(@PathVariable("issuerId") int issuerId){
 		
 		if(!utilsDAO.isEntryExistring(issuerId, "issuer")) {
@@ -53,7 +56,7 @@ public class IssuerController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/issuer/product/{productId}")
+	@GetMapping("/products/{productId}/issuers")
 	public ResponseEntity<?> getProductIssuer(HttpServletRequest request, @PathVariable("productId") int productId){
 		
 		if(!utilsDAO.isEntryExistring(productId, "product")) {
@@ -70,7 +73,7 @@ public class IssuerController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@DeleteMapping("/issuer/{issuerId}")
+	@DeleteMapping("/issuers/{issuerId}")
 	public ResponseEntity<?> deleteIssuer(@PathVariable("issuerId") int issuerId){
 		if(!utilsDAO.isEntryExistring(issuerId, "issuer")) {
 			Map<String, String> error = new HashMap<String, String>();
@@ -79,8 +82,36 @@ public class IssuerController {
 			error.put("details", "The issuer " + issuerId + " can't be found");
 			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
 		}
-		Map<String, Object> issuer = issuerDAO.deleteIssuer(issuerId);
-		return new ResponseEntity(issuer, HttpStatus.OK);
+		boolean deleted = utilsDAO.deleteEntry("issuer", issuerId);
+		if(deleted) {
+			return new ResponseEntity(null, HttpStatus.OK);
+		}
+		else {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "500");
+			error.put("title", "Internal Error");
+			error.put("details", "Internal Error");
+			return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PatchMapping("/issuers/{issuerId}")
+	public ResponseEntity<?> updateIssuer(@PathVariable("issuerId") int issuerId, @RequestBody(required=false) Map<String, Object> requestBody){
+		if(!utilsDAO.isEntryExistring(issuerId, "issuer")) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The issuer " + issuerId + " can't be found");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
+		
+		if(requestBody != null) {
+			utilsDAO.updateEntry("issuer", requestBody, issuerId);
+		}
+		
+		Map<String, Object> issuerUpdated = utilsDAO.getEntry("issuer", issuerId);
+		return new ResponseEntity(issuerUpdated, HttpStatus.OK);
+	}
+	
 }

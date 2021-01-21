@@ -72,14 +72,6 @@ public class UnderlyingDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public int createUnderlying(Map<String, Object> underlying) {
-		String query = "INSERT INTO underlying(id, name, ticker, current_value) VALUES(DEFAULT, '"
-				+ underlying.get("name") + "', '" + underlying.get("ticker") + "', " + underlying.get("current_value") + ")";
-		
-		int UnderlyingMap = jdbcTemplate.update(query);
-		return UnderlyingMap;
-	}
-	
 	public Map<String, Object> getUnderlying(int underlyingId){
 		String query = "SELECT * FROM underlying WHERE id = " + underlyingId + "";	
 		Map<String, Object> underlying = jdbcTemplate.queryForMap(query);
@@ -94,26 +86,22 @@ public class UnderlyingDAO {
 		return result;
 	}
 
-	public int createlinkUnderlyingProduct(Map<String, Object> couple) {
-		String query = "INSERT INTO link_product_underlying(product_id, underlying_id, fixing_value) VALUES('"
-				+ couple.get("product_id") + "', '" + couple.get("underlying_id") + "', " + couple.get("fixing_value") + ")";
+	public int linkUnderlyingProduct(int productId, int underlyingId, Map<String, Object> body) {
+		String query = "INSERT INTO link_product_underlying(product_id, underlying_id, fixing_value) VALUES(?, ?, " + body.get("fixing_value") + ")";
 		
-		int UnderlyingMap = jdbcTemplate.update(query);
+		int UnderlyingMap = jdbcTemplate.update(query, new Object[] {productId, underlyingId});
 		return UnderlyingMap;
 	}
 
-	public Map<String, Object> patchUnderlying(int UnderlyingId){
-		// TODO
-		String query = "SELECT * FROM underlying WHERE id = ? ";
-		
-		Map<String, Object> Underlying = jdbcTemplate.queryForMap(query, new Object[] {UnderlyingId});
-		return Underlying;
+	public boolean unlinkUnderlyingProduct(int productId, int underlyingId) {
+		String query = "DELETE FROM  link_product_underlying WHERE product_id = ? AND underlying_id = ?";
+		return jdbcTemplate.update(query, new Object[] {productId, underlyingId}) == 1;
 	}
 
-	public Map<String, Object> deleteUnderlying(int UnderlyingId){
-		String query = "DELETE FROM underlying WHERE id = " + UnderlyingId;
-		Map<String, Object> Underlying = jdbcTemplate.queryForMap(query);
-		return Underlying;
+	public boolean checkIfRelationExists(int productId, int underlyingId) {
+		String query = "SELECT COUNT(*) FROM link_product_underlying WHERE product_id = ? AND underlying_id = ?";
+		int count = jdbcTemplate.queryForObject(query, new Object[] {productId, underlyingId}, Integer.class);
+		return (count>0);
 	}
 	
 }

@@ -76,6 +76,14 @@ public class UserController {
 			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
 		}
 		
+		if(!utilsDAO.isEntryExistring(productId, "product")) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The product " + productId + " can't be found");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
+		
 		if(!productDAO.checkIfRelationExists(userId, productId)) {
 			Map<String, String> error = new HashMap<String, String>();
 			error.put("status", "404");
@@ -118,7 +126,7 @@ public class UserController {
 			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
 		}
 		
-		if(productDAO.checkIfRelationExists(userId, companyId)) {
+		if(companyDAO.checkIfRelationExists(userId, companyId)) {
 			Map<String, String> error = new HashMap<String, String>();
 			error.put("status", "409");
 			error.put("title", "Conflict");
@@ -126,12 +134,13 @@ public class UserController {
 			return new ResponseEntity(error, HttpStatus.CONFLICT);
 		}
 		
-		companyDAO.linkCompanyAndUser(userId, companyId);
+		companyDAO.linkCompanyAndUser(companyId, userId);
 		
 		return new ResponseEntity(null, HttpStatus.CREATED);
 		
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@DeleteMapping("/users/{userId}/relationship/companies/{companyId}")		
 	public ResponseEntity<?> unlinkUserToCompany(@PathVariable("userId") int userId, @PathVariable("companyId") int companyId){
 
@@ -140,6 +149,14 @@ public class UserController {
 			error.put("status", "404");
 			error.put("title", "Not Found");
 			error.put("details", "The user " + userId + " can't be found");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
+		
+		if(!utilsDAO.isEntryExistring(companyId, "company")) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The company " + companyId + " can't be found");
 			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
 		}
 		

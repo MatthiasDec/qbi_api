@@ -12,17 +12,16 @@ import org.springframework.stereotype.Repository;
 /**
 CREATE TABLE public.product_history
 (
-    id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     product_id integer NOT NULL,
     date date NOT NULL,
     bid real,
-	ask real
-    PRIMARY KEY (id),
+	ask real,
+    CONSTRAINT product_history_pkey PRIMARY KEY (id),
     CONSTRAINT product_id FOREIGN KEY (product_id)
         REFERENCES public.product (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE
-        NOT VALID
 );
 
 
@@ -42,8 +41,8 @@ public class ProductHistoryDAO {
     }
 	
 	public Map<String, Object> getProductHistoryOnDate(int productId, Date valuedate){
-		String query = "SELECT * FROM product_history WHERE product_id = " + productId + "AND date = " + valuedate + "";	
-		Map<String, Object> producthistoryondate = jdbcTemplate.queryForMap(query);
+		String query = "SELECT * FROM product_history WHERE product_id = ? AND date = '" + valuedate.toString() + "'";	
+		Map<String, Object> producthistoryondate = jdbcTemplate.queryForMap(query, new Object[] {productId});
 		return producthistoryondate;
     }
     

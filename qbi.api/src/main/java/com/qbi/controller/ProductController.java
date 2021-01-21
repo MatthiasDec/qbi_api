@@ -42,7 +42,6 @@ public class ProductController {
 	@PostMapping("/products")
 	public ResponseEntity<?> createProduct(@RequestBody(required=false) Map<String, Object> requestBody){
 		
-		
 		int createdProductId = utilsDAO.createEntry("product", requestBody);
 		
 		Map<String, Object> constructedProduct = productDAO.getProduct(createdProductId);

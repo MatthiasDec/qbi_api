@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,7 +30,7 @@ public class UnderlyingHistoryController {
 	private UtilsDAO utilsDAO;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@PostMapping("/underlyinghistory")
+	@PostMapping("/underlyings/history")
 	public ResponseEntity<?> createUnderlyingHistory(@RequestBody(required = false) Map<String, Object> requestBody) {
 
 		int CreatedUnderlyingHistoryId = utilsDAO.createEntry("underlying_history",requestBody); // TODO send back 1 = réussie
@@ -40,10 +39,8 @@ public class UnderlyingHistoryController {
 		return new ResponseEntity(createdUnderlyinghistory, HttpStatus.CREATED);
 	}
 
-	
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/underlyinghistories/{underlyingId}")
+	@GetMapping("/underlyings/{underlyingId}/history")
 	public ResponseEntity<?> getUnderlyingHistories(@PathVariable("underlyingId") int underlyingId){
 		
 		if(!utilsDAO.isEntryExistring(underlyingId, "underlying")) {
@@ -59,9 +56,9 @@ public class UnderlyingHistoryController {
     }
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    @GetMapping("/underlyinghistory")
-    public ResponseEntity<?> getUnderlyingHistoryOnDate(@RequestParam(value="underlyingId",required=true) int underlyingId,
-    @RequestParam(value="valuedate",required=true) Date valuedate){
+    @GetMapping("/underlyings/{underlyingId}/history/date")
+    public ResponseEntity<?> getUnderlyingHistoryOnDate(@PathVariable("underlyingId") int underlyingId, 
+    		@RequestParam(value="valuedate",required=true) Date valuedate){
 		
 		if(!utilsDAO.isEntryExistring(underlyingId, "underlying")) {
 			Map<String, String> error = new HashMap<String, String>();
@@ -76,8 +73,8 @@ public class UnderlyingHistoryController {
 	}
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    @GetMapping("/underlyinghistorybetdate")
-    public ResponseEntity<?> getUnderlyingHistoryBetDate(@RequestParam(value="underlyingId",required=true) int underlyingId,
+    @GetMapping("/underlyings/{underlyingId}/history/between")
+    public ResponseEntity<?> getUnderlyingHistoryBetDate(@PathVariable("underlyingId") int underlyingId,
     @RequestParam(value="beg_date",required=true) Date beg_date,@RequestParam(value="end_date",required=true) Date end_date){
 		
 		if(!utilsDAO.isEntryExistring(underlyingId, "underlying")) {
@@ -93,7 +90,7 @@ public class UnderlyingHistoryController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@DeleteMapping("/underlyinghistory/{underlyinghistoryId}")
+	@DeleteMapping("/underlyings/history/{underlyinghistoryId}")
 	public ResponseEntity<?> deleteUnderlyingHistory(@PathVariable("underlyinghistoryId") int underlyinghistoryId){
 		if(!utilsDAO.isEntryExistring(underlyinghistoryId, "underlying_history")) {
 			Map<String, String> error = new HashMap<String, String>();

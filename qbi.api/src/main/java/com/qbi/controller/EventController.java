@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,16 +30,18 @@ public class EventController {
 	private UtilsDAO utilsDAO;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@PostMapping("/event/create")
+	@PostMapping("/events")
 	public ResponseEntity<?> createEvent(@RequestBody(required = false) Map<String, Object> requestBody) {
-		int createdEventId = eventDAO.createEvent(requestBody);
-		Map<String, Object> event = eventDAO.getEvent(createdEventId); // TODO : it sends back 1 so useless
-
-		return new ResponseEntity(event, HttpStatus.CREATED);
+		
+		int createdEventId = utilsDAO.createEntry("event", requestBody);
+		
+		Map<String, Object> constructedEvent = eventDAO.getEvent(createdEventId);
+			
+		return new ResponseEntity(constructedEvent, HttpStatus.CREATED);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/event/{eventId}")
+	@GetMapping("/events/{eventId}")
 	public ResponseEntity<?> getEvent(@PathVariable("eventId") int eventId){
 		
 		if(!utilsDAO.isEntryExistring(eventId, "event")) {
@@ -54,7 +57,7 @@ public class EventController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/event/product/{productId}")
+	@GetMapping("/products/{productId}/events")
 	public ResponseEntity<?> getProductEvent(HttpServletRequest request, @PathVariable("productId") int productId){
 		
 		if(!utilsDAO.isEntryExistring(productId, "product")) {
@@ -71,7 +74,7 @@ public class EventController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/event/product/next/{productId}")
+	@GetMapping("/products/{productId}/events/next")
 	public ResponseEntity<?> getProductNextEvent(HttpServletRequest request, @PathVariable("productId") int productId){
 		
 		if(!utilsDAO.isEntryExistring(productId, "product")) {
@@ -88,8 +91,9 @@ public class EventController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@DeleteMapping("/event/{eventId}")
+	@DeleteMapping("/events/{eventId}")
 	public ResponseEntity<?> deleteEvent(@PathVariable("eventId") int eventId){
+		
 		if(!utilsDAO.isEntryExistring(eventId, "event")) {
 			Map<String, String> error = new HashMap<String, String>();
 			error.put("status", "404");
@@ -97,8 +101,39 @@ public class EventController {
 			error.put("details", "The event " + eventId + " can't be found");
 			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
 		}
-		Map<String, Object> event = eventDAO.deleteEvent(eventId); // TODO Sends back an error but still fails
-		return new ResponseEntity(event, HttpStatus.OK);
+
+		boolean deleted = utilsDAO.deleteEntry("event", eventId);
+		
+		if(deleted) {
+			return new ResponseEntity(null, HttpStatus.OK);
+		}
+		else {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "500");
+			error.put("title", "Internal Error");
+			error.put("details", "Internal Error");
+			return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PatchMapping("/events/{eventId}")
+	public ResponseEntity<?> updateEvent(@PathVariable("eventId") int eventId, @RequestBody(required = false) Map<String, Object> requestBody){
+		if(!utilsDAO.isEntryExistring(eventId, "event")) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The event " + eventId + " can't be found");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
+		
+		if(requestBody != null) {
+			utilsDAO.updateEntry("event", requestBody, eventId);
+		}
+		
+		Map<String, Object> eventUpdated = utilsDAO.getEntry("event", eventId);
+		return new ResponseEntity(eventUpdated, HttpStatus.OK);
+	}
+	
 }

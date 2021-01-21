@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,7 +116,11 @@ public class UtilsDAO {
 					queryValues.append("'', ");
 					break;
 				case("date"):
-					queryValues.append("'', ");
+					
+					Date currentDate = new Date();
+					String currentDateFormated= new SimpleDateFormat("yyyy-MM-dd").format(currentDate);
+					
+					queryValues.append("'" + currentDateFormated.toString() + "' , ");
 					break;
 				case("varchar"):
 					queryValues.append("'', ");
