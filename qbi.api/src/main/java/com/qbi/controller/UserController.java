@@ -3,10 +3,13 @@ package com.qbi.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +18,10 @@ import com.qbi.DAO.CompanyDAO;
 import com.qbi.DAO.ProductDAO;
 import com.qbi.DAO.UserDAO;
 import com.qbi.DAO.UtilsDAO;
+import com.qbi.model.RoleEnum;
+import com.qbi.util.TokenUtil;
+
+import io.jsonwebtoken.Claims;
 
 @RestController
 public class UserController {
@@ -30,6 +37,9 @@ public class UserController {
 	
 	@Autowired
 	UtilsDAO utilsDAO;
+	
+	@Autowired
+	TokenUtil tokenUtil;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping("/users/{userId}/relationship/products/{productId}")
@@ -181,5 +191,44 @@ public class UserController {
 			return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/users/role")
+	public ResponseEntity<?> getUserRole(HttpServletRequest request){
+		String token = request.getHeader("Authorization");
+		if(token == null || token.isEmpty() || !token.startsWith("Bearer") || token.length() <= 7) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "401");
+			error.put("title", "Unauthorized");
+			error.put("details", "User not properly logged in");
+			return new ResponseEntity(error, HttpStatus.UNAUTHORIZED);
+		}
+		
+		token = token.substring(7);
+		int roleNumber;
+		try {
+			String role = tokenUtil.extractRole(token);
+			roleNumber = RoleEnum.valueOf(role).getRoleNumber();
+		}catch(IllegalArgumentException e) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "500");
+			error.put("title", "Internal Server Error");
+			error.put("details", "Unknown role");
+			return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity(roleNumber, HttpStatus.OK);
+		
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/users/teapot")
+	public ResponseEntity<?> isUserTeaPot(){
+		Map<String, String> error = new HashMap<String, String>();
+		error.put("status", "418");
+		error.put("title", "I Am A Teapot");
+		error.put("details", "You are a teapot");
+		return new ResponseEntity(error, HttpStatus.I_AM_A_TEAPOT);
 	}
 }

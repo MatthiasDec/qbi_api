@@ -1099,6 +1099,44 @@
 				"description": "Just to check API is working fine\r\nNo need for Auth"
 			},
 			"response": []
+		},
+		{
+			"name": "Get User Role (in it)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/role",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "I AM A TEAPOT ???",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/teapot",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"teapot"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {

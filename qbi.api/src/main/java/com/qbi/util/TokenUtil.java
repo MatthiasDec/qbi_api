@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.qbi.config.AppConfiguration;
+import com.qbi.service.AuthUserDetailsController;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,6 +20,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class TokenUtil {
 
+	@Autowired
+	private AuthUserDetailsController authUserDetailsController;
+	
 	private String ENCODE_KEY = AppConfiguration.ENCODE_KEY;
 	private int EXPIRE_TIME = AppConfiguration.EXPIRE_TIME;
 	
@@ -41,7 +47,7 @@ public class TokenUtil {
 	private Claims extractAllClaims(String token) {
 		return Jwts.parser().setSigningKey(ENCODE_KEY).parseClaimsJws(token).getBody();
 	}
-	
+		
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
 	}
@@ -57,6 +63,18 @@ public class TokenUtil {
 	public Boolean valideToken(String token, UserDetails userDetail) {
 		final String username = extractUsername(token);
 		return (username.equals(userDetail.getUsername()) && !isTokenExpired(token));
+	}
+	
+	public String extractRole(String token) {
+		String role = null;
+		String username = extractUsername(token);
+		
+		if(username != null && SecurityContextHolder.getContext().getAuthentication() != null ) {
+			UserDetails userDetails = authUserDetailsController.loadUserByUsername(username);
+			role = userDetails.getAuthorities().iterator().next().toString();
+		}
+		
+		return role;
 	}
 	
 }
