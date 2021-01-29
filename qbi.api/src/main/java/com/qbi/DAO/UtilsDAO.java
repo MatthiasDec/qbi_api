@@ -143,6 +143,9 @@ public class UtilsDAO {
 				case("bool"):
 					queryValues.append("false, ");
 					break;
+				case("bytea"):
+					queryValues.append("null, ");
+					break;
 				default:
 					System.out.println("Type " + columnType + " not supported");
 				
