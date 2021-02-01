@@ -1,5 +1,6 @@
 package com.qbi.DAO;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,12 @@ public class IssuerDAO {
 		String query = "SELECT * FROM issuer WHERE id = " + issuerId + "";	
 		Map<String, Object> issuer = jdbcTemplate.queryForMap(query);
 		return issuer;
+	}
+
+	public List<Map<String, Object>> getIssuers(){
+		String query = "SELECT id, name FROM issuer";	
+		List<Map<String, Object>> issuerList = jdbcTemplate.queryForList(query);
+		return issuerList;
 	}
 	
 	public Map<String, Object> getIssuerByProductId(int productId){

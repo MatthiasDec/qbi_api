@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "496e4aa8-c329-4220-871f-fb90ec92029e",
+		"_postman_id": "c8d298d6-fb9c-4478-aea6-f63b98a221a0",
 		"name": "QBI_API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -471,6 +471,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Issuer List Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/issuers",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"issuers"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -809,6 +827,25 @@
 					"response": []
 				},
 				{
+					"name": "Underlying List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/underlyings/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"underlyings",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Underlying create",
 					"request": {
 						"method": "POST",
@@ -1097,44 +1134,6 @@
 					]
 				},
 				"description": "Just to check API is working fine\r\nNo need for Auth"
-			},
-			"response": []
-		},
-		{
-			"name": "Get User Role (in it)",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/users/role",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users",
-						"role"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "I AM A TEAPOT ???",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/users/teapot",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users",
-						"teapot"
-					]
-				}
 			},
 			"response": []
 		}

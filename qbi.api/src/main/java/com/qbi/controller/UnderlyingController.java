@@ -137,6 +137,13 @@ public class UnderlyingController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/underlyings")
+	public ResponseEntity<?> getUnderlyings(){
+		List<Map<String, Object>> underlyingList = underlyingDAO.getUnderlyings();
+		return new ResponseEntity(underlyingList, HttpStatus.OK);	
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("/products/{productId}/underlyings")
 	public ResponseEntity<?> getProductUnderlying(HttpServletRequest request, @PathVariable("productId") int productId){
 		

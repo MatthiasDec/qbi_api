@@ -77,6 +77,12 @@ public class UnderlyingDAO {
 		Map<String, Object> underlying = jdbcTemplate.queryForMap(query);
 		return underlying;
 	}
+
+	public List<Map<String, Object>> getUnderlyings(){
+		String query = "SELECT id, name, ticker FROM underlying ";
+		List<Map<String, Object>> result = jdbcTemplate.queryForList(query);
+		return result;
+	}
 	
 	public List<Map<String, Object>> getUnderlyingsByProductId(int productId){
 		String query = "SELECT underlying.id, underlying.name, underlying.ticker, link_product_underlying.fixing_value as \"fixingValue\", underlying.current_value as \"currentValue\" FROM underlying " +

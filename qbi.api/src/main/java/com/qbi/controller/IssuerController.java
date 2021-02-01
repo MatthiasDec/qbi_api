@@ -1,6 +1,7 @@
 package com.qbi.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,6 +71,13 @@ public class IssuerController {
 		Map<String, Object> issuer = issuerDAO.getIssuerByProductId(productId);
 		
 		return new ResponseEntity(issuer, HttpStatus.OK);
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/issuers")
+	public ResponseEntity<?> getIssuers(HttpServletRequest request){
+		List<Map<String, Object>> issuerList = issuerDAO.getIssuers();
+		return new ResponseEntity(issuerList, HttpStatus.OK);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
