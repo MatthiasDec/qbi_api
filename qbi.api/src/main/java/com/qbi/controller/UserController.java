@@ -218,7 +218,10 @@ public class UserController {
 			return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity(roleNumber, HttpStatus.OK);
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("role_number", roleNumber);
+		
+		return new ResponseEntity(response, HttpStatus.OK);
 		
 	}
 
