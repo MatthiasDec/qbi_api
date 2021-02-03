@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c8d298d6-fb9c-4478-aea6-f63b98a221a0",
+		"_postman_id": "db1b5983-a0b4-4b40-97b9-f3a318edcff3",
 		"name": "QBI_API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1134,6 +1134,25 @@
 					]
 				},
 				"description": "Just to check API is working fine\r\nNo need for Auth"
+			},
+			"response": []
+		},
+		{
+			"name": "get user role",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/role",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"role"
+					]
+				}
 			},
 			"response": []
 		}
