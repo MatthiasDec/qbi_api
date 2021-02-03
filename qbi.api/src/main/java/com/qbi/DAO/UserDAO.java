@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 import com.qbi.model.User;
 
 @Repository
@@ -24,5 +27,19 @@ public class UserDAO {
                 rs.getString("role")));
 		
 		return foundUser;
-	}	
+	}
+
+	public List<Map<String, Object>> getAllClients() {
+		String query = "SELECT id, username FROM app_user WHERE role = 'client' AND active=true";
+		
+		List<Map<String, Object>> foundUser = jdbcTemplate.queryForList(query);
+		return foundUser;
+	}
+
+	public List<Map<String, Object>> getAllUsers() {
+		String query = "SELECT id, username FROM app_user";
+		
+		List<Map<String, Object>> foundUser = jdbcTemplate.queryForList(query);
+		return foundUser;
+	}
 }

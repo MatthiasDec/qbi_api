@@ -1,6 +1,7 @@
 package com.qbi.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -233,5 +234,12 @@ public class UserController {
 		error.put("title", "I Am A Teapot");
 		error.put("details", "You are a teapot");
 		return new ResponseEntity(error, HttpStatus.I_AM_A_TEAPOT);
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/users/")
+	public ResponseEntity<?> getAllUsers(){
+		List<Map<String, Object>> usersList = userDAO.getAllUsers();
+		return new ResponseEntity(usersList, HttpStatus.OK);
 	}
 }
