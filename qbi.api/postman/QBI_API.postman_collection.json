@@ -1095,7 +1095,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"matthias\",\r\n    \"password\": \"password\"\r\n}",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1151,6 +1151,36 @@
 					"path": [
 						"users",
 						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get companies and linked users for companies linked to logged in user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/companies/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"companies",
+						"users"
 					]
 				}
 			},

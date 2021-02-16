@@ -1,5 +1,6 @@
 package com.qbi.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import com.qbi.DAO.ProductDAO;
 import com.qbi.DAO.UserDAO;
 import com.qbi.DAO.UtilsDAO;
 import com.qbi.model.RoleEnum;
+import com.qbi.model.User;
 import com.qbi.util.TokenUtil;
 
 import io.jsonwebtoken.Claims;
@@ -242,4 +244,66 @@ public class UserController {
 		List<Map<String, Object>> usersList = userDAO.getAllUsers();
 		return new ResponseEntity(usersList, HttpStatus.OK);
 	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/users/companies/users")
+	public ResponseEntity<?> getCompaniesAndUsers(HttpServletRequest request){
+		String token = request.getHeader("Authorization");
+		if(token == null || token.isEmpty() || !token.startsWith("Bearer") || token.length() <= 7) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "401");
+			error.put("title", "Unauthorized");
+			error.put("details", "User not properly logged in");
+			return new ResponseEntity(error, HttpStatus.UNAUTHORIZED);
+		}
+		token = token.substring(7);
+		String roleName;
+		try {
+			String role = tokenUtil.extractRole(token);
+			roleName = RoleEnum.valueOf(role).getRoleName();
+			
+			List<Map<String, Object>> companiesList = new ArrayList<Map<String, Object>>();
+			if(roleName.equalsIgnoreCase("ADMIN")) {
+				companiesList = companyDAO.getAllCompanies();
+				
+				for(Map<String, Object> company : companiesList) {
+					int companyId = (int) company.get("id");
+					List<Map<String, Object>> userForCompanyList = userDAO.getUsersByCompany(companyId);
+					company.put("users", userForCompanyList);
+				}
+				return new ResponseEntity(companiesList, HttpStatus.OK);
+			}
+			else if (roleName.equalsIgnoreCase("SALES")) {
+				
+				String username = tokenUtil.extractUsername(token);
+				User user = userDAO.findUserByUsername(username);
+				int userId = user.getId();
+				companiesList = companyDAO.getCompaniesByUserId(userId);
+				
+				for(Map<String, Object> company : companiesList) {
+					int companyId = (int) company.get("id");
+					List<Map<String, Object>> userForCompanyList = userDAO.getUsersByCompany(companyId);
+					company.put("users", userForCompanyList);
+					
+				}
+				return new ResponseEntity(companiesList, HttpStatus.OK);
+			}
+			else {
+				Map<String, String> error = new HashMap<String, String>();
+				error.put("status", "401");
+				error.put("title", "Unauthorized");
+				error.put("details", "User not properly logged in");
+				return new ResponseEntity(error, HttpStatus.UNAUTHORIZED);
+			}
+			
+		}catch(IllegalArgumentException e) {
+			System.out.println(e);
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "500");
+			error.put("title", "Internal Server Error");
+			error.put("details", "Unknown role");
+			return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

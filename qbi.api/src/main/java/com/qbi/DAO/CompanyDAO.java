@@ -20,6 +20,13 @@ public class CompanyDAO {
 	return result;
 	}
 	
+	// QUERY ONLY FOR ADMINS
+	public List<Map<String, Object>> getAllCompanies(){
+		String query = "SELECT * FROM company";
+		List<Map<String, Object>> result = jdbcTemplate.queryForList(query);
+		return result;
+	}
+	
 	public Map<String, Object> getCompanyById(int companyId){
 		String query = "SELECT * FROM company WHERE id = ?";
 		

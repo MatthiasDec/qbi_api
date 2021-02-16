@@ -7,12 +7,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.qbi.authentication.CrossOriginsFilter;
 import com.qbi.authentication.TokenRequestFilter;
@@ -39,6 +41,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/Authenticate").permitAll()
 			.antMatchers("/hello").permitAll()
 			.antMatchers("/api-doc").permitAll()
+			// For testing purpose TODO:delete
+			.antMatchers("/test/role/admin").hasAuthority("ADMIN")
+			.antMatchers("/test/role/sales").hasAuthority("SALES")
+			.antMatchers("/test/role/user").hasAuthority("USER")
+			.antMatchers("/users/companies/users").hasAnyAuthority("SALES", "ADMIN")
+			//
 			.anyRequest().authenticated()
 		   	.and().httpBasic();
 		
@@ -58,5 +66,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@SuppressWarnings("deprecation")
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {return NoOpPasswordEncoder.getInstance(); }
-	
 }
