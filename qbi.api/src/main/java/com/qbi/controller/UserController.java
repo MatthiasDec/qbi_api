@@ -305,5 +305,5 @@ public class UserController {
 			return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
+	
 }

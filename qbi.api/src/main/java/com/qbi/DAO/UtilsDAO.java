@@ -207,4 +207,17 @@ public class UtilsDAO {
 		return entry;
 	}
 	
+	public boolean updateUserPassword(String username, String password) {
+		boolean response = false;
+		String query = "UPDATE app_user SET password = '" + password + "' WHERE username = '" + username+"'";
+		
+		int i = jdbcTemplate.update(query);
+		
+		if(i>0) {
+			response = true;
+		}
+		
+		return response;
+	}
+	
 }

@@ -1095,7 +1095,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password\"\r\n}",
+					"raw": "{\r\n    \"username\": \"matthias\",\r\n    \"password\": \"password\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1181,6 +1181,34 @@
 						"users",
 						"companies",
 						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reset password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"old_password\": \"password\",\r\n    \"new_password\": \"new_password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/Authenticate/resetPassword",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Authenticate",
+						"resetPassword"
 					]
 				}
 			},
