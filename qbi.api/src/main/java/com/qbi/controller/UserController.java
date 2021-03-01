@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qbi.DAO.CompanyDAO;
@@ -46,7 +47,7 @@ public class UserController {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping("/users/{userId}/relationship/products/{productId}")
-	public ResponseEntity<?> linkUserToProduct(@PathVariable("userId") int userId, @PathVariable("productId") int productId){
+	public ResponseEntity<?> linkUserToProduct(@PathVariable("userId") int userId, @PathVariable("productId") int productId, @RequestBody(required=false) Map<String, Object> requestBody){
 		
 		if(!utilsDAO.isEntryExistring(userId, "app_user")) {
 			Map<String, String> error = new HashMap<String, String>();
@@ -72,7 +73,12 @@ public class UserController {
 			return new ResponseEntity(error, HttpStatus.CONFLICT);
 		}
 		
-		productDAO.linkProductAndUser(userId, productId);
+		// REQUESTBODY TODO
+		long position = -1;
+		if (requestBody.get(position) != null) {
+			position = (int) requestBody.get(position);
+		}
+		productDAO.linkProductAndUser(userId, productId, position);
 		
 		return new ResponseEntity(null, HttpStatus.CREATED);
 	}

@@ -80,10 +80,10 @@ public class ProductDAO {
 		return result;
 	}
 	
-	public void linkProductAndUser(int userId, int productId){
-		String query = "INSERT INTO link_user_product(product_id, user_id) VALUES(? , ?)";
+	public void linkProductAndUser(int userId, int productId, long position){
+		String query = "INSERT INTO link_user_product(product_id, user_id, position) VALUES(? , ?, ?)";
 		
-		jdbcTemplate.update(query, new Object[] {productId, userId});
+		jdbcTemplate.update(query, new Object[] {productId, userId, position});
 	}
 	
 	public boolean unlinkProductAndUser(int userId, int productId) {
