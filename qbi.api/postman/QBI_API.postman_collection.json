@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "db1b5983-a0b4-4b40-97b9-f3a318edcff3",
+		"_postman_id": "59091fc8-bbd4-4569-9fa1-4b3ed0d63db6",
 		"name": "QBI_API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -240,6 +240,33 @@
 							"port": "8080",
 							"path": [
 								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Event List Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n    [\r\n        {    \r\n            \"product_id\": \"1\",\r\n            \"type\": \"CouponCheck\",\r\n            \"date\": \"24/12/2021\"\r\n        },\r\n        {    \r\n            \"product_id\": \"1\",\r\n            \"type\": \"CouponDelivery\",\r\n            \"date\": \"27/12/2021\"\r\n        },\r\n                {    \r\n            \"product_id\": \"1\",\r\n            \"type\": \"CouponCheck\",\r\n            \"date\": \"24/01/2022\"\r\n        },\r\n        {    \r\n            \"product_id\": \"1\",\r\n            \"type\": \"CouponDelivery\",\r\n            \"date\": \"27/01/2022\"\r\n        },\r\n                {    \r\n            \"product_id\": \"1\",\r\n            \"type\": \"CouponCheck\",\r\n            \"date\": \"24/02/2022\"\r\n        },\r\n        {    \r\n            \"product_id\": \"1\",\r\n            \"type\": \"CouponDelivery\",\r\n            \"date\": \"27/02/2022\"\r\n        }\r\n    ]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/eventsList",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eventsList"
 							]
 						}
 					},
@@ -502,7 +529,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \r\n}",
+							"raw": "{\r\n    \"name\": \"TEST PRODUCT\",\r\n    \"ISIN\": \"XS123456789\",\r\n    \"autocall_level\": 1,\r\n    \"coupon_level\": 1,\r\n    \"barrier_level\": 1,\r\n    \"currency\" : \"USD\",\r\n    \"frequency\" : \"Monthly\",\r\n    \"memory_effect\" : true,\r\n    \"initial_valuation_date\" : \"01/01/2020\",\r\n    \"issue_date\" : \"02/01/2022\",\r\n    \"final_valuation_date\" : \"01/01/2022\",\r\n    \"maturity_date\" : \"02/01/2022\",\r\n    \"potential_coupon\": 1,\r\n    \"bid\" : 110,\r\n    \"ask\" : 120\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

@@ -83,7 +83,16 @@ public class UtilsDAO {
 		
 		return result;
 	}
-	
+
+	// To fix later, ugly way to insert by batch
+	public int createListEntry(String tableName, List<Map<String, Object>> object) {
+		int result = 0;
+		for (Map<String,Object> map : object) {
+			result = createEntry(tableName, map);
+		}
+		return result;
+	}
+
 	public int createEntry(String tableName, Map<String, Object> object) {
 		
 		List<Map<String, String>> tableInfos = getBasesStructure(tableName);

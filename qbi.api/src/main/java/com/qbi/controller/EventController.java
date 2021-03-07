@@ -41,6 +41,17 @@ public class EventController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PostMapping("/eventsList")
+	public ResponseEntity<?> createEvent(@RequestBody(required = false) List<Map<String, Object>> requestBody) {
+		
+		int createdEventId = utilsDAO.createListEntry("event", requestBody);
+		
+		Map<String, Object> constructedEvent = eventDAO.getEvent(createdEventId);
+			
+		return new ResponseEntity(constructedEvent, HttpStatus.CREATED);
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("/events/{eventId}")
 	public ResponseEntity<?> getEvent(@PathVariable("eventId") int eventId){
 		
