@@ -219,6 +219,47 @@
 					"response": []
 				},
 				{
+					"name": "Event List Get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"2021-03-01\",\r\n    \"endDate\": \"2022-06-31\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/events/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"events",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Event Create",
 					"request": {
 						"method": "POST",

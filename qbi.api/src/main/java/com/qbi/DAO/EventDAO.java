@@ -58,6 +58,15 @@ public class EventDAO {
 		Map<String, Object> event = jdbcTemplate.queryForMap(query, new Object[] {productId});
 		return event;
 	}
+
+	public List<Map<String, Object>> getEventList(Map<String, Date> object){
+		String startDateFormated= new SimpleDateFormat("yyyy-MM-dd").format(object.get("startDate"));
+		String endDateFormated= new SimpleDateFormat("yyyy-MM-dd").format(object.get("endDate"));
+		
+		String query = "SELECT * FROM event WHERE date >= '"+ startDateFormated.toString() + "' AND date <= '" + endDateFormated.toString()  + "' ORDER BY date ASC";	
+		List<Map<String, Object>> eventList = jdbcTemplate.queryForList(query, new Object[] {});
+		return eventList;
+	}
 	
 	
 	public List<Map<String, Object>> getEventsByProductId(int productId){

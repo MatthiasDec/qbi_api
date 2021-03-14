@@ -1,5 +1,6 @@
 package com.qbi.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,14 @@ public class EventController {
 		
 		Map<String, Object> event = eventDAO.getEvent(eventId);
 		return new ResponseEntity(event, HttpStatus.OK);	
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/events/list")
+	public ResponseEntity<?> getEventList(@RequestBody(required = true) Map<String, Date> requestBody){
+
+		List<Map<String, Object>> eventList = eventDAO.getEventList(requestBody);
+		return new ResponseEntity(eventList, HttpStatus.OK);	
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
