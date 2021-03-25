@@ -97,5 +97,13 @@ public class ProductDAO {
 		int count = jdbcTemplate.queryForObject(query, new Object[] {productId, userId}, Integer.class);
 		return (count>0);
 	}
+
+	public List<Map<String, Object>> countIssuers() {
+		String query = "SELECT issuer.name, COUNT(*) as count FROM product " +
+		"JOIN issuer ON product.issuer_id = issuer.id " + 
+		"GROUP BY issuer.name ORDER BY count DESC";
+		
+		return jdbcTemplate.queryForList(query);
+	}
 	
 }

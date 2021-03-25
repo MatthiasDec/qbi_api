@@ -151,4 +151,12 @@ public class ProductController {
 		
 		return new ResponseEntity(product, HttpStatus.OK);
 	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/products/issuer/count")
+	public ResponseEntity<?> getProductIssuerCount(){
+		
+		List<Map<String, Object>> issuerCountList = productDAO.countIssuers();
+		return new ResponseEntity(issuerCountList, HttpStatus.OK);
+	}
 }

@@ -69,7 +69,7 @@ public class EventController {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@GetMapping("/events/list")
+	@PostMapping("/events/list")
 	public ResponseEntity<?> getEventList(@RequestBody(required = true) Map<String, Date> requestBody){
 
 		List<Map<String, Object>> eventList = eventDAO.getEventList(requestBody);
