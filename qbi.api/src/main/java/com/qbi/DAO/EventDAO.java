@@ -63,7 +63,10 @@ public class EventDAO {
 		String startDateFormated= new SimpleDateFormat("yyyy-MM-dd").format(object.get("startDate"));
 		String endDateFormated= new SimpleDateFormat("yyyy-MM-dd").format(object.get("endDate"));
 		
-		String query = "SELECT * FROM event WHERE date >= '"+ startDateFormated.toString() + "' AND date <= '" + endDateFormated.toString()  + "' ORDER BY date ASC";	
+		String query = "SELECT event.id, event.product_id, product.name, event.type, event.date FROM event"  
+		+ " JOIN product ON product.id = event.product_id "
+		+ " WHERE date >= '"+ startDateFormated.toString() + "' AND date <= '" + endDateFormated.toString() + "'"
+		+ " ORDER BY date ASC";	
 		List<Map<String, Object>> eventList = jdbcTemplate.queryForList(query, new Object[] {});
 		return eventList;
 	}
