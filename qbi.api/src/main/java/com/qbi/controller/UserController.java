@@ -75,8 +75,8 @@ public class UserController {
 		
 		// REQUESTBODY TODO
 		long position = -1;
-		if (requestBody.get(position) != null) {
-			position = (int) requestBody.get(position);
+		if (requestBody.get("position") != null) {
+			position = (int) requestBody.get("position");
 		}
 		productDAO.linkProductAndUser(userId, productId, position);
 		
