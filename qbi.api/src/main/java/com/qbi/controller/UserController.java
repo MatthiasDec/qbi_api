@@ -73,7 +73,6 @@ public class UserController {
 			return new ResponseEntity(error, HttpStatus.CONFLICT);
 		}
 		
-		// REQUESTBODY TODO
 		long position = -1;
 		if (requestBody.get("position") != null) {
 			position = (int) requestBody.get("position");

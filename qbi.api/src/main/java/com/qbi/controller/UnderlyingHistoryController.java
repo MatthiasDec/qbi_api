@@ -72,10 +72,17 @@ public class UnderlyingHistoryController {
 		return new ResponseEntity(underlyinghistoryondate, HttpStatus.OK);	
 	}
 
+	/*
+	Dans Postman, mettre :
+	{
+    	"startDate": "2020-01-01",
+    	"endDate": "2020-06-01"
+	}
+	*/
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    @GetMapping("/underlyings/{underlyingId}/history/between")
+    @PostMapping("/underlyings/{underlyingId}/history/between")
     public ResponseEntity<?> getUnderlyingHistoryBetDate(@PathVariable("underlyingId") int underlyingId,
-    @RequestParam(value="beg_date",required=true) Date beg_date,@RequestParam(value="end_date",required=true) Date end_date){
+    @RequestBody(required = true) Map<String, Date> requestBody){
 		
 		if(!utilsDAO.isEntryExistring(underlyingId, "underlying")) {
 			Map<String, String> error = new HashMap<String, String>();
@@ -84,8 +91,25 @@ public class UnderlyingHistoryController {
 			error.put("details", "The underlying " + underlyingId + " can't be found");
 			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
 		}
+
+		List<List<Object>> underlyinghistorybetdate = underlyinghistoryDAO.getUnderlyingHistoryBetDate(underlyingId, requestBody);
+		return new ResponseEntity(underlyinghistorybetdate, HttpStatus.OK);	
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+    @PostMapping("/products/{productId}/underlyings/history/between")
+    public ResponseEntity<?> getUnderlyingHistoryBetDateByProductId(@PathVariable("productId") int productId,
+    @RequestBody(required = true) Map<String, Date> requestBody){
 		
-		List<Map<String, Object>> underlyinghistorybetdate = underlyinghistoryDAO.getUnderlyingHistoryBetDate(underlyingId,beg_date,end_date);
+		if(!utilsDAO.isEntryExistring(productId, "product")) {
+			Map<String, String> error = new HashMap<String, String>();
+			error.put("status", "404");
+			error.put("title", "Not Found");
+			error.put("details", "The product " + productId + " can't be found");
+			return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+		}
+
+		List<Map<String, Object>> underlyinghistorybetdate = underlyinghistoryDAO.getUnderlyingsHistoryBetDateByProductId(productId, requestBody);
 		return new ResponseEntity(underlyinghistorybetdate, HttpStatus.OK);	
 	}
 
