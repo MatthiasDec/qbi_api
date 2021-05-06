@@ -220,9 +220,6 @@
 				},
 				{
 					"name": "Event List Get",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -234,7 +231,7 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -889,6 +886,27 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Product & Underlying History",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/products/1/history/full",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"1",
+								"history",
+								"full"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1148,6 +1166,69 @@
 								"underlyings",
 								"history",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Underlying between dates",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"2020-01-01\",\r\n    \"endDate\": \"2021-01-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/underlyings/1/history/between",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"underlyings",
+								"1",
+								"history",
+								"between"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Underlying By Product ID between dates",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"2020-01-01\",\r\n    \"endDate\": \"2021-01-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080//products/1/underlyings//history/between",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"",
+								"products",
+								"1",
+								"underlyings",
+								"",
+								"history",
+								"between"
 							]
 						}
 					},
